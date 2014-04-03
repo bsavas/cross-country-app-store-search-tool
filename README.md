@@ -1,6 +1,7 @@
 Cross Country App Store Search Tool
 =============================
 
+Implemented in HTML & JavaScript. Server side processing not required.
 
 - Search on multiple App stores with ease
 - See extracted keywords with frequency and relevancy
@@ -15,6 +16,6 @@ Demo
 - Top page
  - http://apps.knowman.jp/
 - Accessing shared search query
- - http://apps.knowman.jp/?q=fril&s=JP
+ - http://apps.knowman.jp/?q=shopping&s=JP
 - Accessing a specific search result
  - http://apps.knowman.jp/?q=%E5%87%BA%E5%93%81&s=JP&t=583292889
