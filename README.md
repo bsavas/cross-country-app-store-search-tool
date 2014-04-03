@@ -12,4 +12,9 @@ Hope it helps your App store optimization!
 
 Demo
 =============================
-http://apps.knowman.jp/
+- Top page
+ - http://apps.knowman.jp/
+- Accessing shared search query
+ - http://apps.knowman.jp/?q=fril&s=JP
+- Accessing a specific search result
+ - http://apps.knowman.jp/?q=%E5%87%BA%E5%93%81&s=JP&t=583292889
