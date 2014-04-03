@@ -1,0 +1,669 @@
+<html>
+<head>
+	<!--
+	
+		Cross Country App Store Search Tool, Version 1.2 2013/11/15.
+		by Bora Savas (bora@beenos.com)
+		
+	-->
+	
+	<title>Cross Country App Store Search Engine</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="/purl.js"></script>
+	<script src="/select2.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="/select2.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<style>
+		body {
+			-webkit-font-smoothing: antialiased;
+		}
+		@media only screen and (max-device-width: 480px) {
+			.container { width:100% !important; }
+		}
+		span.stars, span.stars span {
+			display: inline-block;
+			background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgCAYAAAAbifjMAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABJRJREFUeNqEVFtoXEUY/uacOdmz7ta9JjXpNqttrSQmbbxQDFgt9EHFy0MpfRELBbUPYlHwQXwv+CIFX1QQwebJmiqoFKmashCTvrQItUmh3UTabNM0dZPm7Oyec+afGR92tzm5gD8Mc+Y/839z+b75GGMM7XhmEPjyJKJxtNWfjiaPfwJcumIAAOy3kSbAyI/AiWNYH6da/YfRZK0GfPM9sLcvAgAAyQTA+YNhbzz52FcA0KjNHgdwEwCIgJpYBeNrkAWQSDS/GcNwausLBcDAuz87bEwTQIi1W7TW79n3m6sQYX92675CtmtfgQj7iZr/1scGAKUARSh2uIU+bpk0t3S6w93WpwhFpTYCcGNwbn1SEvBwfqjHF/8AxmBLdqDn/lLlC2wS7PyIXQDwcaZrcPiJp97p49yKq7AKGA1Zn2uu4nYBRoPZMYSBaJSnfphe/ndmEsCn7PyI3T7KYZu7b+/oO9SXzRcLfqOChqzBDxsgkuB8C4L79+YWKxentZJfAxgFoO23DlkAYABcNZouVO9eKcZSXUWPbsZD5UEzH7AllGxU75THzxmjPwAw2apZpVEIAynNnJTG2+bfYfHkWr5qdcUWF5XnOGzOcRgSiaZ+eKWy5mo7bNsaymXCFNAAYzHAKBhDcDMspRQbCkPTAZhweblFo1It6pptIJVO5GK8ZqlQhxN/XL86MXbjqgoboesE1sMpN6cUBqI19isvAlo3mzF4rffRLS/VRRCMX7g17Xnh50LQxMyNlYLr2jHOLb6w4F9XGpfbNfarB1b3bwzeFYI6Z8sr40qZ9xnDBQB/EZmxyq16QQiVDgOtAPwSFVI0nq158hSA04whejkzxuBYzZNHAby3Rkhnz55FbeEMagvf4aH0EHr3fBb9P9zqJ9uJk2MfYaz6Nwa2DuDI44ebAADAOUcymVyv1COt/kw0+Wd5Ak/m+tc+ZyKClBJ81RCyiUTikaZGRBZAtT2vXbzBD4QQSLQMgTG2M5fLZQBgZWVlpzGm2p7zP37gg4hARLs6OzsznZ2dGSLaRUTwNzGETfxAgYhyrut227Ydt207HovFuokopzYxBG6MObE+SURIp9OpRqMBYwwymUxqeXn5zU39YHR0NAPg5Xw+v2NwcLCbc+5IKR8cBwBisRiMMbAsC2EYymvXrs1Xq9UZAL+y0dFRAGAAnuacP7979+7ufD6faTQaCIIAQRCAiMA5hxBiaX5+fl4pNQ7gMgDTZsEAuEREM1NTU2/09/fv1VonTEumnHMQkZibm5sG8BOApQ00CiEgpVySUvq+77M2ne0IgoAtLi76juMsOY7zgG5eqVTWXKpt29uz2Wy8pYXWIzNwHCeulNoehiEHQMstQ7CUUoi0nnQ6nXAchxERlUql26VS6baUkjo6OlgqlUoopXqiNfbBgwehtYbWGsaYPcVisb9er6tSqTTved6YEKJcLpczrus6nHNrYWHhrtb6ZruGm8h7Nsb0zs7O1mu12i0AP1uWda91/uuTk5OvJ5PJ7Vrr3vVCio6Lnuf9DuAiY0xH8veMMd96nvccgAPRgv8GAKLGfJfzmGrKAAAAAElFTkSuQmCC) 0 -16px repeat-x;
+			width: 	0px;
+			height: 16px;
+		}
+		span.stars span {
+			background-position: 0 0;
+		}
+		.hidden { display:none; }
+		.display { display:block; }
+		.media {
+			margin-top:2em;
+		}
+		.long_desc {
+			margin:10px 0 10px 0;
+		}
+		
+		div.screenshots {
+			background-color: #f7f7f7;
+			z-index: 0;
+			border-radius: 4px;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			-o-border-radius: 4px;
+			padding-top:15px;
+		}
+		div.content {
+			clear: both;
+			position: relative;
+			width: auto;
+			min-height: 320px;
+			max-height: 570px;
+			margin: 0 14px;
+			padding-bottom: 16px;
+			white-space: nowrap;
+			overflow-x: auto;
+			overflow-y: hidden;
+			-webkit-user-select: none;
+			zoom:1;
+			-webkit-overflow-scrolling: touch;
+			height: 420px;
+		}
+		div.content:after {
+			content: ".";
+			display: block;
+			height: 0;
+			clear: both;
+			visibility: hidden;
+		}
+		div.content>div {
+			position: relative;
+			zoom: 1;
+			max-width: 1300px; /*5000px;*/
+		}
+		div.lockup {
+			float: left;
+			width: auto;
+			margin: 0 13px 0 4px;
+			padding: 0;
+		}
+		div.lockup>img {
+			margin: 0 3px;
+			border: 1px solid #fff;
+			-webkit-box-shadow: 0 3px 5px rgba(0,0,0,.3);
+			-moz-box-shadow: #999 0 3px 5px;
+			border-color: #a2a2a2\9;
+			text-align: left;
+			height:400px;
+		}
+		.share_button { display:none; }
+	</style>
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$.fn.stars = function() {
+			return $(this).each(function() {
+				// Get the value
+				var val = parseFloat($(this).html());
+				// Make sure that the value is in 0 - 5 range, multiply to get width
+				var size = Math.max(0, (Math.min(5, val))) * 16;
+				// Create stars holder
+				var $span = $('<span />').width(size);
+				// Replace the numerical value with stars
+				$(this).html($span);
+			});
+		}
+		if (!Array.prototype.indexOf) {
+			Array.prototype.indexOf = function (searchElement, fromIndex) {
+			  if ( this === undefined || this === null ) {
+				throw new TypeError( '"this" is null or not defined' );
+			  }
+
+			  var length = this.length >>> 0; // Hack to convert object.length to a UInt32
+
+			  fromIndex = +fromIndex || 0;
+
+			  if (Math.abs(fromIndex) === Infinity) {
+				fromIndex = 0;
+			  }
+
+			  if (fromIndex < 0) {
+				fromIndex += length;
+				if (fromIndex < 0) {
+				  fromIndex = 0;
+				}
+			  }
+
+			  for (;fromIndex < length; fromIndex++) {
+				if (this[fromIndex] === searchElement) {
+				  return fromIndex;
+				}
+			  }
+
+			  return -1;
+			};
+		  }
+	</script>
+		
+	<script type="text/javascript">
+		(function(){
+		  var cache = {};
+ 
+		  this.tmpl = function tmpl(str, data){
+			// Figure out if we're getting a template, or if we need to
+			// load the template - and be sure to cache the result.
+			var fn = !/\W/.test(str) ?
+			  cache[str] = cache[str] ||
+				tmpl(document.getElementById(str).innerHTML) :
+	 
+			  // Generate a reusable function that will serve as a template
+			  // generator (and which will be cached).
+			  new Function("obj",
+				"var p=[],print=function(){p.push.apply(p,arguments);};" +
+	   
+				// Introduce the data as local variables using with(){}
+				"with(obj){p.push('" +
+	   
+				// Convert the template into pure JavaScript
+				str
+				  .replace(/[\r\t\n]/g, " ")
+				  .split("<%").join("\t")
+				  .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+				  .replace(/\t=(.*?)%>/g, "',$1,'")
+				  .split("\t").join("');")
+				  .split("%>").join("p.push('")
+				  .split("\r").join("\\'")
+			  + "');}return p.join('');");
+   
+			// Provide some basic currying to the user
+			return data ? fn( data ) : fn;
+		  };
+		})();
+	</script>
+
+	<script type="text/javascript">
+		var limit = 30;
+		var cache = {};
+		var keyword_cache = {};
+		var query, country;
+		var last_toggle_id = null;
+		
+		// Stop words
+		var sw_jp = ["これ", "それ", "あれ", "この", "その", "あの", "ここ", "そこ", "あそこ", "こちら", "どこ", "だれ", "なに", "なん", "何", "私", "貴方", "貴方方", "我々", "私達", "あの人", "あのかた", "彼女", "彼", "です", "あります", "おります", "います", "は", "が", "の", "に", "を", "で", "え", "から", "まで", "より", "も", "どの", "と", "し", "それで", "しかし"];
+		var sw_tr = ["acaba", "altmış", "altı", "ama", "ancak", "arada", "aslında", "ayrıca", "bana", "bazı", "belki", "ben", "benden", "beni", "benim", "beri", "beş", "bile", "bin", "bir", "birçok", "biri", "birkaç", "birkez", "birşey", "birşeyi", "biz", "bize", "bizden", "bizi", "bizim", "böyle", "böylece", "bu", "buna", "bunda", "bundan", "bunlar", "bunları", "bunların", "bunu", "bunun", "burada", "çok", "çünkü", "da", "daha", "dahi", "de", "defa", "değil", "diğer", "diye", "doksan", "dokuz", "dolayı", "dolayısıyla", "dört", "edecek", "eden", "ederek", "edilecek", "ediliyor", "edilmesi", "ediyor", "eğer", "elli", "en", "etmesi", "etti", "ettiği", "ettiğini", "gibi", "göre", "halen", "hangi", "hatta", "hem", "henüz", "hep", "hepsi", "her", "herhangi", "herkesin", "hiç", "hiçbir", "için", "iki", "ile", "ilgili", "ise", "işte", "itibaren", "itibariyle", "kadar", "karşın", "katrilyon", "kendi", "kendilerine", "kendini", "kendisi", "kendisine", "kendisini", "kez", "ki", "kim", "kimden", "kime", "kimi", "kimse", "kırk", "milyar", "milyon", "mu", "mü", "mı", "nasıl", "ne", "neden", "nedenle", "nerde", "nerede", "nereye", "niye", "niçin", "o", "olan", "olarak", "oldu", "olduğu", "olduğunu", "olduklarını", "olmadı", "olmadığı", "olmak", "olması", "olmayan", "olmaz", "olsa", "olsun", "olup", "olur", "olursa", "oluyor", "on", "ona", "ondan", "onlar", "onlardan", "onları", "onların", "onu", "onun", "otuz", "oysa", "öyle", "pek", "rağmen", "sadece", "sanki", "sekiz", "seksen", "sen", "senden", "seni", "senin", "siz", "sizden", "sizi", "sizin", "şey", "şeyden", "şeyi", "şeyler", "şöyle", "şu", "şuna", "şunda", "şundan", "şunları", "şunu", "tarafından", "trilyon", "tüm", "üç", "üzere", "var", "vardı", "ve", "veya", "ya", "yani", "yapacak", "yapılan", "yapılması", "yapıyor", "yapmak", "yaptı", "yaptığı", "yaptığını", "yaptıkları", "yedi", "yerine", "yetmiş", "yine", "yirmi", "yoksa", "yüz", "zaten"];
+		var sw_en = ["a", "able", "about", "above", "according", "accordingly", "across", "actually", "after", "afterwards", "again", "against", "ain't", "all", "allow", "allows", "almost", "alone", "along", "already", "also", "although", "always", "am", "among", "amongst", "an", "and", "another", "any", "anybody", "anyhow", "anyone", "anything", "anyway", "anyways", "anywhere", "apart", "appear", "appreciate", "appropriate", "are", "around", "as", "aside", "ask", "asking", "associated", "at", "available", "away", "awfully", "be", "became", "because", "become", "becomes", "becoming", "been", "before", "beforehand", "behind", "being", "believe", "below", "beside", "besides", "best", "better", "between", "beyond", "both", "brief", "but", "by", "came", "can", "cannot", "cant", "cause", "causes", "certain", "certainly", "changes", "clearly", "co", "com", "come", "comes", "concerning", "consequently", "consider", "considering", "contain", "containing", "contains", "corresponding", "could", "course", "currently", "d", "definitely", "described", "despite", "did", "different", "do", "does", "doing", "done", "down", "downwards", "during", "each", "edu", "eg", "eight", "either", "else", "elsewhere", "enough", "entirely", "especially", "etc", "even", "ever", "every", "everybody", "everyone", "everything", "everywhere", "ex", "exactly", "example", "except", "far", "few", "fifth", "first", "five", "followed", "following", "follows", "for", "former", "formerly", "forth", "four", "from", "further", "furthermore", "get", "gets", "getting", "given", "gives", "go", "goes", "going", "gone", "got", "gotten", "greetings", "h", "had", "happens", "hardly", "has", "have", "having", "he", "hello", "help", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "hi", "him", "himself", "his", "hither", "hopefully", "how", "howbeit", "however", "ie", "if", "ignored", "immediate", "in", "inasmuch", "inc", "indeed", "indicate", "indicated", "indicates", "inner", "insofar", "instead", "into", "inward", "is", "it", "its", "itself", "just", "keep", "keeps", "kept", "know", "knows", "known", "last", "lately", "later", "latter", "latterly", "least", "less", "lest", "let", "like", "liked", "likely", "little", "look", "looking", "looks", "ltd", "mainly", "many", "may", "maybe", "me", "mean", "meanwhile", "merely", "might", "more", "moreover", "most", "mostly", "much", "must", "my", "myself", "name", "namely", "near", "nearly", "necessary", "need", "needs", "neither", "never", "nevertheless", "new", "next", "nine", "no", "nobody", "non", "none", "noone", "nor", "normally", "not", "nothing", "novel", "now", "nowhere", "obviously", "of", "off", "often", "oh", "ok", "okay", "old", "on", "once", "one", "ones", "only", "onto", "or", "other", "others", "otherwise", "ought", "our", "ours", "ourselves", "out", "outside", "over", "overall", "own", "particular", "particularly", "per", "perhaps", "placed", "please", "plus", "possible", "presumably", "probably", "provides", "quite", "rather", "rd", "re", "really", "reasonably", "regarding", "regardless", "regards", "relatively", "respectively", "right", "said", "same", "saw", "say", "saying", "says", "second", "secondly", "see", "seeing", "seem", "seemed", "seeming", "seems", "seen", "self", "selves", "sensible", "sent", "serious", "seriously", "seven", "several", "shall", "she", "should", "since", "six", "so", "some", "somebody", "somehow", "someone", "something", "sometime", "sometimes", "somewhat", "somewhere", "soon", "sorry", "specified", "specify", "specifying", "still", "sub", "such", "sup", "sure", "take", "taken", "tell", "tends", "th", "than", "thank", "thanks", "thanx", "that", "thats", "the", "their", "theirs", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "theres", "thereupon", "these", "they", "think", "third", "this", "thorough", "thoroughly", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "took", "toward", "towards", "tried", "tries", "truly", "try", "trying", "twice", "two", "un", "under", "unfortunately", "unless", "unlikely", "until", "unto", "up", "upon", "us", "use", "used", "useful", "uses", "using", "usually", "uucp", "value", "various", "very", "via", "viz", "vs", "w", "want", "wants", "was", "wasn't", "way", "we", "welcome", "well", "went", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "willing", "wish", "with", "within", "without", "wonder", "would", "would", "yes", "yet", "you", "your", "yours", "yourself", "yourselves", "zero", "http", "//", "www"];
+		var pu_en = ["'", "!", '"', "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~", "--", "=="];
+		var pu_jp = ["（", "）", "(", "）", "「", "」", "【", "】", "『", "』", "［", "］", "〈", "〉", "《", "》", "｛", "｝", "■", "□", "◆", "□", "▲", "△", "▲", "△", "※", "*", "´", "/", "・", "／", "＿", "＝", "——", "？", "！", "ω", "＾", "ー", "＊＊", "*+", "*∴", "∴*", "+*", "』！", ".。", "・*", "・゜", ".:", "･･･", "**", "━━", "■■", "―――", "――", "┗━", "・・", "・・・", "・「", "▽▲"];
+		var wr_jp = ["する", "ます", "こと", "なり", "まし", "たし", "なく", "でき", "なっ", "いる", "ない", "たい", "として", "よう", "できる", "など", "ある", "たら", "なら", "なる", "あなた", "よく", "ため", "たり", "あり", "おく", "くれる", "について", "ださい", "場合", "ござい", "さい", "ませ", "また", "そして", "さあ", "だけ", "のみ", "さらに"];
+		var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+		var stop_words = sw_jp.concat(sw_jp, sw_tr, sw_en, pu_en, pu_jp, wr_jp, numbers);
+		
+		// Tokeniser for Japanese/Chinese languages
+		function Tokenizer(){var e={"[一二三四五六七八九十百千万億兆]":"M","[一-龠々〆ヵヶ]":"H","[ぁ-ん]":"I","[ァ-ヴーｱ-ﾝﾞｰ]":"K","[a-zA-Zａ-ｚＡ-Ｚ]":"A","[0-9０-９]":"N"};this.chartype_=[];for(var t in e){var n=new RegExp;n.compile(t);this.chartype_.push([n,e[t]])}this.BIAS__=-332;this.BC1__={HH:6,II:2461,KH:406,OH:-1378};this.BC2__={AA:-3267,AI:2744,AN:-878,HH:-4070,HM:-1711,HN:4012,HO:3761,IA:1327,IH:-1184,II:-1332,IK:1721,IO:5492,KI:3831,KK:-8741,MH:-3132,MK:3334,OO:-2920};this.BC3__={HH:996,HI:626,HK:-721,HN:-1307,HO:-836,IH:-301,KK:2762,MK:1079,MM:4034,OA:-1652,OH:266};this.BP1__={BB:295,OB:304,OO:-125,UB:352};this.BP2__={BO:60,OO:-1762};this.BQ1__={BHH:1150,BHM:1521,BII:-1158,BIM:886,BMH:1208,BNH:449,BOH:-91,BOO:-2597,OHI:451,OIH:-296,OKA:1851,OKH:-1020,OKK:904,OOO:2965};this.BQ2__={BHH:118,BHI:-1159,BHM:466,BIH:-919,BKK:-1720,BKO:864,OHH:-1139,OHM:-181,OIH:153,UHI:-1146};this.BQ3__={BHH:-792,BHI:2664,BII:-299,BKI:419,BMH:937,BMM:8335,BNN:998,BOH:775,OHH:2174,OHM:439,OII:280,OKH:1798,OKI:-793,OKO:-2242,OMH:-2402,OOO:11699};this.BQ4__={BHH:-3895,BIH:3761,BII:-4654,BIK:1348,BKK:-1806,BMI:-3385,BOO:-12396,OAH:926,OHH:266,OHK:-2036,ONN:-973};this.BW1__={",と":660,",同":727,"B1あ":1404,"B1同":542,"、と":660,"、同":727,"」と":1682,"あっ":1505,"いう":1743,"いっ":-2055,"いる":672,"うし":-4817,"うん":665,"から":3472,"がら":600,"こう":-790,"こと":2083,"こん":-1262,"さら":-4143,"さん":4573,"した":2641,"して":1104,"すで":-3399,"そこ":1977,"それ":-871,"たち":1122,"ため":601,"った":3463,"つい":-802,"てい":805,"てき":1249,"でき":1127,"です":3445,"では":844,"とい":-4915,"とみ":1922,"どこ":3887,"ない":5713,"なっ":3015,"など":7379,"なん":-1113,"にし":2468,"には":1498,"にも":1671,"に対":-912,"の一":-501,"の中":741,"ませ":2448,"まで":1711,"まま":2600,"まる":-2155,"やむ":-1947,"よっ":-2565,"れた":2369,"れで":-913,"をし":1860,"を見":731,"亡く":-1886,"京都":2558,"取り":-2784,"大き":-2604,"大阪":1497,"平方":-2314,"引き":-1336,"日本":-195,"本当":-2423,"毎日":-2113,"目指":-724,"Ｂ１あ":1404,"Ｂ１同":542,"｣と":1682};this.BW2__={"..":-11822,11:-669,"――":-5730,"−−":-13175,"いう":-1609,"うか":2490,"かし":-1350,"かも":-602,"から":-7194,"かれ":4612,"がい":853,"がら":-3198,"きた":1941,"くな":-1597,"こと":-8392,"この":-4193,"させ":4533,"され":13168,"さん":-3977,"しい":-1819,"しか":-545,"した":5078,"して":972,"しな":939,"その":-3744,"たい":-1253,"たた":-662,"ただ":-3857,"たち":-786,"たと":1224,"たは":-939,"った":4589,"って":1647,"っと":-2094,"てい":6144,"てき":3640,"てく":2551,"ては":-3110,"ても":-3065,"でい":2666,"でき":-1528,"でし":-3828,"です":-4761,"でも":-4203,"とい":1890,"とこ":-1746,"とと":-2279,"との":720,"とみ":5168,"とも":-3941,"ない":-2488,"なが":-1313,"など":-6509,"なの":2614,"なん":3099,"にお":-1615,"にし":2748,"にな":2454,"によ":-7236,"に対":-14943,"に従":-4688,"に関":-11388,"のか":2093,"ので":-7059,"のに":-6041,"のの":-6125,"はい":1073,"はが":-1033,"はず":-2532,"ばれ":1813,"まし":-1316,"まで":-6621,"まれ":5409,"めて":-3153,"もい":2230,"もの":-10713,"らか":-944,"らし":-1611,"らに":-1897,"りし":651,"りま":1620,"れた":4270,"れて":849,"れば":4114,"ろう":6067,"われ":7901,"を通":-11877,"んだ":728,"んな":-4115,"一人":602,"一方":-1375,"一日":970,"一部":-1051,"上が":-4479,"会社":-1116,"出て":2163,"分の":-7758,"同党":970,"同日":-913,"大阪":-2471,"委員":-1250,"少な":-1050,"年度":-8669,"年間":-1626,"府県":-2363,"手権":-1982,"新聞":-4066,"日新":-722,"日本":-7068,"日米":3372,"曜日":-601,"朝鮮":-2355,"本人":-2697,"東京":-1543,"然と":-1384,"社会":-1276,"立て":-990,"第に":-1612,"米国":-4268,"１１":-669};this.BW3__={"あた":-2194,"あり":719,"ある":3846,"い.":-1185,"い。":-1185,"いい":5308,"いえ":2079,"いく":3029,"いた":2056,"いっ":1883,"いる":5600,"いわ":1527,"うち":1117,"うと":4798,"えと":1454,"か.":2857,"か。":2857,"かけ":-743,"かっ":-4098,"かに":-669,"から":6520,"かり":-2670,"が,":1816,"が、":1816,"がき":-4855,"がけ":-1127,"がっ":-913,"がら":-4977,"がり":-2064,"きた":1645,"けど":1374,"こと":7397,"この":1542,"ころ":-2757,"さい":-714,"さを":976,"し,":1557,"し、":1557,"しい":-3714,"した":3562,"して":1449,"しな":2608,"しま":1200,"す.":-1310,"す。":-1310,"する":6521,"ず,":3426,"ず、":3426,"ずに":841,"そう":428,"た.":8875,"た。":8875,"たい":-594,"たの":812,"たり":-1183,"たる":-853,"だ.":4098,"だ。":4098,"だっ":1004,"った":-4748,"って":300,"てい":6240,"てお":855,"ても":302,"です":1437,"でに":-1482,"では":2295,"とう":-1387,"とし":2266,"との":541,"とも":-3543,"どう":4664,"ない":1796,"なく":-903,"など":2135,"に,":-1021,"に、":-1021,"にし":1771,"にな":1906,"には":2644,"の,":-724,"の、":-724,"の子":-1e3,"は,":1337,"は、":1337,"べき":2181,"まし":1113,"ます":6943,"まっ":-1549,"まで":6154,"まれ":-793,"らし":1479,"られ":6820,"るる":3818,"れ,":854,"れ、":854,"れた":1850,"れて":1375,"れば":-3246,"れる":1091,"われ":-605,"んだ":606,"んで":798,"カ月":990,"会議":860,"入り":1232,"大会":2217,"始め":1681,"市":965,"新聞":-5055,"日,":974,"日、":974,"社会":2024,"ｶ月":990};this.TC1__={AAA:1093,HHH:1029,HHM:580,HII:998,HOH:-390,HOM:-331,IHI:1169,IOH:-142,IOI:-1015,IOM:467,MMH:187,OOI:-1832};this.TC2__={HHO:2088,HII:-1023,HMM:-1154,IHI:-1965,KKH:703,OII:-2649};this.TC3__={AAA:-294,HHH:346,HHI:-341,HII:-1088,HIK:731,HOH:-1486,IHH:128,IHI:-3041,IHO:-1935,IIH:-825,IIM:-1035,IOI:-542,KHH:-1216,KKA:491,KKH:-1217,KOK:-1009,MHH:-2694,MHM:-457,MHO:123,MMH:-471,NNH:-1689,NNO:662,OHO:-3393};this.TC4__={HHH:-203,HHI:1344,HHK:365,HHM:-122,HHN:182,HHO:669,HIH:804,HII:679,HOH:446,IHH:695,IHO:-2324,IIH:321,III:1497,IIO:656,IOO:54,KAK:4845,KKA:3386,KKK:3065,MHH:-405,MHI:201,MMH:-241,MMM:661,MOM:841};this.TQ1__={BHHH:-227,BHHI:316,BHIH:-132,BIHH:60,BIII:1595,BNHH:-744,BOHH:225,BOOO:-908,OAKK:482,OHHH:281,OHIH:249,OIHI:200,OIIH:-68};this.TQ2__={BIHH:-1401,BIII:-1033,BKAK:-543,BOOO:-5591};this.TQ3__={BHHH:478,BHHM:-1073,BHIH:222,BHII:-504,BIIH:-116,BIII:-105,BMHI:-863,BMHM:-464,BOMH:620,OHHH:346,OHHI:1729,OHII:997,OHMH:481,OIHH:623,OIIH:1344,OKAK:2792,OKHH:587,OKKA:679,OOHH:110,OOII:-685};this.TQ4__={BHHH:-721,BHHM:-3604,BHII:-966,BIIH:-607,BIII:-2181,OAAA:-2763,OAKK:180,OHHH:-294,OHHI:2446,OHHO:480,OHIH:-1573,OIHH:1935,OIHI:-493,OIIH:626,OIII:-4007,OKAK:-8156};this.TW1__={"につい":-4681,"東京都":2026};this.TW2__={"ある程":-2049,"いった":-1256,"ころが":-2434,"しょう":3873,"その後":-4430,"だって":-1049,"ていた":1833,"として":-4657,"ともに":-4517,"もので":1882,"一気に":-792,"初めて":-1512,"同時に":-8097,"大きな":-1255,"対して":-2721,"社会党":-3216};this.TW3__={"いただ":-1734,"してい":1314,"として":-4314,"につい":-5483,"にとっ":-5989,"に当た":-6247,"ので,":-727,"ので、":-727,"のもの":-600,"れから":-3752,"十二月":-2287};this.TW4__={"いう.":8576,"いう。":8576,"からな":-2348,"してい":2958,"たが,":1516,"たが、":1516,"ている":1538,"という":1349,"ました":5543,"ません":1097,"ようと":-4258,"よると":5865};this.UC1__={A:484,K:93,M:645,O:-505};this.UC2__={A:819,H:1059,I:409,M:3987,N:5775,O:646};this.UC3__={A:-1370,I:2311};this.UC4__={A:-2643,H:1809,I:-1032,K:-3450,M:3565,N:3876,O:6646};this.UC5__={H:313,I:-1238,K:-799,M:539,O:-831};this.UC6__={H:-506,I:-253,K:87,M:247,O:-387};this.UP1__={O:-214};this.UP2__={B:69,O:935};this.UP3__={B:189};this.UQ1__={BH:21,BI:-12,BK:-99,BN:142,BO:-56,OH:-95,OI:477,OK:410,OO:-2422};this.UQ2__={BH:216,BI:113,OK:1759};this.UQ3__={BA:-479,BH:42,BI:1913,BK:-7198,BM:3160,BN:6427,BO:14761,OI:-827,ON:-3212};this.UW1__={",":156,"、":156,"「":-463,"あ":-941,"う":-127,"が":-553,"き":121,"こ":505,"で":-201,"と":-547,"ど":-123,"に":-789,"の":-185,"は":-847,"も":-466,"や":-470,"よ":182,"ら":-292,"り":208,"れ":169,"を":-446,"ん":-137,"・":-135,"主":-402,"京":-268,"区":-912,"午":871,"国":-460,"大":561,"委":729,"市":-411,"日":-141,"理":361,"生":-408,"県":-386,"都":-718,"｢":-463,"･":-135};this.UW2__={",":-829,"、":-829,"〇":892,"「":-645,"」":3145,"あ":-538,"い":505,"う":134,"お":-502,"か":1454,"が":-856,"く":-412,"こ":1141,"さ":878,"ざ":540,"し":1529,"す":-675,"せ":300,"そ":-1011,"た":188,"だ":1837,"つ":-949,"て":-291,"で":-268,"と":-981,"ど":1273,"な":1063,"に":-1764,"の":130,"は":-409,"ひ":-1273,"べ":1261,"ま":600,"も":-1263,"や":-402,"よ":1639,"り":-579,"る":-694,"れ":571,"を":-2516,"ん":2095,"ア":-587,"カ":306,"キ":568,"ッ":831,"三":-758,"不":-2150,"世":-302,"中":-968,"主":-861,"事":492,"人":-123,"会":978,"保":362,"入":548,"初":-3025,"副":-1566,"北":-3414,"区":-422,"大":-1769,"天":-865,"太":-483,"子":-1519,"学":760,"実":1023,"小":-2009,"市":-813,"年":-1060,"強":1067,"手":-1519,"揺":-1033,"政":1522,"文":-1355,"新":-1682,"日":-1815,"明":-1462,"最":-630,"朝":-1843,"本":-1650,"東":-931,"果":-665,"次":-2378,"民":-180,"気":-1740,"理":752,"発":529,"目":-1584,"相":-242,"県":-1165,"立":-763,"第":810,"米":509,"自":-1353,"行":838,"西":-744,"見":-3874,"調":1010,"議":1198,"込":3041,"開":1758,"間":-1257,"｢":-645,"｣":3145,"ｯ":831,"ｱ":-587,"ｶ":306,"ｷ":568};this.UW3__={",":4889,1:-800,"−":-1723,"、":4889,"々":-2311,"〇":5827,"」":2670,"〓":-3573,"あ":-2696,"い":1006,"う":2342,"え":1983,"お":-4864,"か":-1163,"が":3271,"く":1004,"け":388,"げ":401,"こ":-3552,"ご":-3116,"さ":-1058,"し":-395,"す":584,"せ":3685,"そ":-5228,"た":842,"ち":-521,"っ":-1444,"つ":-1081,"て":6167,"で":2318,"と":1691,"ど":-899,"な":-2788,"に":2745,"の":4056,"は":4555,"ひ":-2171,"ふ":-1798,"へ":1199,"ほ":-5516,"ま":-4384,"み":-120,"め":1205,"も":2323,"や":-788,"よ":-202,"ら":727,"り":649,"る":5905,"れ":2773,"わ":-1207,"を":6620,"ん":-518,"ア":551,"グ":1319,"ス":874,"ッ":-1350,"ト":521,"ム":1109,"ル":1591,"ロ":2201,"ン":278,"・":-3794,"一":-1619,"下":-1759,"世":-2087,"両":3815,"中":653,"主":-758,"予":-1193,"二":974,"人":2742,"今":792,"他":1889,"以":-1368,"低":811,"何":4265,"作":-361,"保":-2439,"元":4858,"党":3593,"全":1574,"公":-3030,"六":755,"共":-1880,"円":5807,"再":3095,"分":457,"初":2475,"別":1129,"前":2286,"副":4437,"力":365,"動":-949,"務":-1872,"化":1327,"北":-1038,"区":4646,"千":-2309,"午":-783,"協":-1006,"口":483,"右":1233,"各":3588,"合":-241,"同":3906,"和":-837,"員":4513,"国":642,"型":1389,"場":1219,"外":-241,"妻":2016,"学":-1356,"安":-423,"実":-1008,"家":1078,"小":-513,"少":-3102,"州":1155,"市":3197,"平":-1804,"年":2416,"広":-1030,"府":1605,"度":1452,"建":-2352,"当":-3885,"得":1905,"思":-1291,"性":1822,"戸":-488,"指":-3973,"政":-2013,"教":-1479,"数":3222,"文":-1489,"新":1764,"日":2099,"旧":5792,"昨":-661,"時":-1248,"曜":-951,"最":-937,"月":4125,"期":360,"李":3094,"村":364,"東":-805,"核":5156,"森":2438,"業":484,"氏":2613,"民":-1694,"決":-1073,"法":1868,"海":-495,"無":979,"物":461,"特":-3850,"生":-273,"用":914,"町":1215,"的":7313,"直":-1835,"省":792,"県":6293,"知":-1528,"私":4231,"税":401,"立":-960,"第":1201,"米":7767,"系":3066,"約":3663,"級":1384,"統":-4229,"総":1163,"線":1255,"者":6457,"能":725,"自":-2869,"英":785,"見":1044,"調":-562,"財":-733,"費":1777,"車":1835,"軍":1375,"込":-1504,"通":-1136,"選":-681,"郎":1026,"郡":4404,"部":1200,"金":2163,"長":421,"開":-1432,"間":1302,"関":-1282,"雨":2009,"電":-1045,"非":2066,"駅":1620,"１":-800,"｣":2670,"･":-3794,"ｯ":-1350,"ｱ":551,"ｸﾞ":1319,"ｽ":874,"ﾄ":521,"ﾑ":1109,"ﾙ":1591,"ﾛ":2201,"ﾝ":278};this.UW4__={",":3930,".":3508,"―":-4841,"、":3930,"。":3508,"〇":4999,"「":1895,"」":3798,"〓":-5156,"あ":4752,"い":-3435,"う":-640,"え":-2514,"お":2405,"か":530,"が":6006,"き":-4482,"ぎ":-3821,"く":-3788,"け":-4376,"げ":-4734,"こ":2255,"ご":1979,"さ":2864,"し":-843,"じ":-2506,"す":-731,"ず":1251,"せ":181,"そ":4091,"た":5034,"だ":5408,"ち":-3654,"っ":-5882,"つ":-1659,"て":3994,"で":7410,"と":4547,"な":5433,"に":6499,"ぬ":1853,"ね":1413,"の":7396,"は":8578,"ば":1940,"ひ":4249,"び":-4134,"ふ":1345,"へ":6665,"べ":-744,"ほ":1464,"ま":1051,"み":-2082,"む":-882,"め":-5046,"も":4169,"ゃ":-2666,"や":2795,"ょ":-1544,"よ":3351,"ら":-2922,"り":-9726,"る":-14896,"れ":-2613,"ろ":-4570,"わ":-1783,"を":13150,"ん":-2352,"カ":2145,"コ":1789,"セ":1287,"ッ":-724,"ト":-403,"メ":-1635,"ラ":-881,"リ":-541,"ル":-856,"ン":-3637,"・":-4371,"ー":-11870,"一":-2069,"中":2210,"予":782,"事":-190,"井":-1768,"人":1036,"以":544,"会":950,"体":-1286,"作":530,"側":4292,"先":601,"党":-2006,"共":-1212,"内":584,"円":788,"初":1347,"前":1623,"副":3879,"力":-302,"動":-740,"務":-2715,"化":776,"区":4517,"協":1013,"参":1555,"合":-1834,"和":-681,"員":-910,"器":-851,"回":1500,"国":-619,"園":-1200,"地":866,"場":-1410,"塁":-2094,"士":-1413,"多":1067,"大":571,"子":-4802,"学":-1397,"定":-1057,"寺":-809,"小":1910,"屋":-1328,"山":-1500,"島":-2056,"川":-2667,"市":2771,"年":374,"庁":-4556,"後":456,"性":553,"感":916,"所":-1566,"支":856,"改":787,"政":2182,"教":704,"文":522,"方":-856,"日":1798,"時":1829,"最":845,"月":-9066,"木":-485,"来":-442,"校":-360,"業":-1043,"氏":5388,"民":-2716,"気":-910,"沢":-939,"済":-543,"物":-735,"率":672,"球":-1267,"生":-1286,"産":-1101,"田":-2900,"町":1826,"的":2586,"目":922,"省":-3485,"県":2997,"空":-867,"立":-2112,"第":788,"米":2937,"系":786,"約":2171,"経":1146,"統":-1169,"総":940,"線":-994,"署":749,"者":2145,"能":-730,"般":-852,"行":-792,"規":792,"警":-1184,"議":-244,"谷":-1e3,"賞":730,"車":-1481,"軍":1158,"輪":-1433,"込":-3370,"近":929,"道":-1291,"選":2596,"郎":-4866,"都":1192,"野":-1100,"銀":-2213,"長":357,"間":-2344,"院":-2297,"際":-2604,"電":-878,"領":-1659,"題":-792,"館":-1984,"首":1749,"高":2120,"｢":1895,"｣":3798,"･":-4371,"ｯ":-724,"ｰ":-11870,"ｶ":2145,"ｺ":1789,"ｾ":1287,"ﾄ":-403,"ﾒ":-1635,"ﾗ":-881,"ﾘ":-541,"ﾙ":-856,"ﾝ":-3637};this.UW5__={",":465,".":-299,1:-514,E2:-32768,"]":-2762,"、":465,"。":-299,"「":363,"あ":1655,"い":331,"う":-503,"え":1199,"お":527,"か":647,"が":-421,"き":1624,"ぎ":1971,"く":312,"げ":-983,"さ":-1537,"し":-1371,"す":-852,"だ":-1186,"ち":1093,"っ":52,"つ":921,"て":-18,"で":-850,"と":-127,"ど":1682,"な":-787,"に":-1224,"の":-635,"は":-578,"べ":1001,"み":502,"め":865,"ゃ":3350,"ょ":854,"り":-208,"る":429,"れ":504,"わ":419,"を":-1264,"ん":327,"イ":241,"ル":451,"ン":-343,"中":-871,"京":722,"会":-1153,"党":-654,"務":3519,"区":-901,"告":848,"員":2104,"大":-1296,"学":-548,"定":1785,"嵐":-1304,"市":-2991,"席":921,"年":1763,"思":872,"所":-814,"挙":1618,"新":-1682,"日":218,"月":-4353,"査":932,"格":1356,"機":-1508,"氏":-1347,"田":240,"町":-3912,"的":-3149,"相":1319,"省":-1052,"県":-4003,"研":-997,"社":-278,"空":-813,"統":1955,"者":-2233,"表":663,"語":-1073,"議":1219,"選":-1018,"郎":-368,"長":786,"間":1191,"題":2368,"館":-689,"１":-514,"Ｅ２":-32768,"｢":363,"ｲ":241,"ﾙ":451,"ﾝ":-343};this.UW6__={",":227,".":808,1:-270,E1:306,"、":227,"。":808,"あ":-307,"う":189,"か":241,"が":-73,"く":-121,"こ":-200,"じ":1782,"す":383,"た":-428,"っ":573,"て":-1014,"で":101,"と":-105,"な":-253,"に":-149,"の":-417,"は":-236,"も":-206,"り":187,"る":-135,"を":195,"ル":-673,"ン":-496,"一":-277,"中":201,"件":-800,"会":624,"前":302,"区":1792,"員":-1212,"委":798,"学":-960,"市":887,"広":-695,"後":535,"業":-697,"相":753,"社":-507,"福":974,"空":-822,"者":1811,"連":463,"郎":1082,"１":-270,"Ｅ１":306,"ﾙ":-673,"ﾝ":-496};return this}Tokenizer.prototype.ctype_=function(e){for(var t in this.chartype_){if(e.match(this.chartype_[t][0])){return this.chartype_[t][1]}}return"O"};Tokenizer.prototype.ts_=function(e){if(e){return e}return 0};Tokenizer.prototype.segment=function(e){if(e==null||e==undefined||e==""){return[]}var t=[];var n=["B3","B2","B1"];var r=["O","O","O"];var i=e.split("");for(f=0;f<i.length;++f){n.push(i[f]);r.push(this.ctype_(i[f]))}n.push("E1");n.push("E2");n.push("E3");r.push("O");r.push("O");r.push("O");var s=n[3];var o="U";var u="U";var a="U";for(var f=4;f<n.length-3;++f){var l=this.BIAS__;var c=n[f-3];var h=n[f-2];var p=n[f-1];var d=n[f];var v=n[f+1];var m=n[f+2];var g=r[f-3];var y=r[f-2];var b=r[f-1];var w=r[f];var E=r[f+1];var S=r[f+2];l+=this.ts_(this.UP1__[o]);l+=this.ts_(this.UP2__[u]);l+=this.ts_(this.UP3__[a]);l+=this.ts_(this.BP1__[o+u]);l+=this.ts_(this.BP2__[u+a]);l+=this.ts_(this.UW1__[c]);l+=this.ts_(this.UW2__[h]);l+=this.ts_(this.UW3__[p]);l+=this.ts_(this.UW4__[d]);l+=this.ts_(this.UW5__[v]);l+=this.ts_(this.UW6__[m]);l+=this.ts_(this.BW1__[h+p]);l+=this.ts_(this.BW2__[p+d]);l+=this.ts_(this.BW3__[d+v]);l+=this.ts_(this.TW1__[c+h+p]);l+=this.ts_(this.TW2__[h+p+d]);l+=this.ts_(this.TW3__[p+d+v]);l+=this.ts_(this.TW4__[d+v+m]);l+=this.ts_(this.UC1__[g]);l+=this.ts_(this.UC2__[y]);l+=this.ts_(this.UC3__[b]);l+=this.ts_(this.UC4__[w]);l+=this.ts_(this.UC5__[E]);l+=this.ts_(this.UC6__[S]);l+=this.ts_(this.BC1__[y+b]);l+=this.ts_(this.BC2__[b+w]);l+=this.ts_(this.BC3__[w+E]);l+=this.ts_(this.TC1__[g+y+b]);l+=this.ts_(this.TC2__[y+b+w]);l+=this.ts_(this.TC3__[b+w+E]);l+=this.ts_(this.TC4__[w+E+S]);l+=this.ts_(this.UQ1__[o+g]);l+=this.ts_(this.UQ2__[u+y]);l+=this.ts_(this.UQ3__[a+b]);l+=this.ts_(this.BQ1__[u+y+b]);l+=this.ts_(this.BQ2__[u+b+w]);l+=this.ts_(this.BQ3__[a+y+b]);l+=this.ts_(this.BQ4__[a+b+w]);l+=this.ts_(this.TQ1__[u+g+y+b]);l+=this.ts_(this.TQ2__[u+y+b+w]);l+=this.ts_(this.TQ3__[a+g+y+b]);l+=this.ts_(this.TQ4__[a+y+b+w]);var x="O";if(l>0){t.push(s);s="";x="B"}o=u;u=a;a=x;s+=n[f]}t.push(s);return t}
+		var tokenizer = new Tokenizer();
+		
+		function toFixed(value, precision) {
+			var precision = precision || 0,
+			neg = value < 0,
+			power = Math.pow(10, precision),
+			value = Math.round(value * power),
+			integral = String((neg ? Math.ceil : Math.floor)(value / power)),
+			fraction = String((neg ? -value : value) % power),
+			padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
+
+			return precision ? integral + '.' +  padding + fraction : integral;
+		}
+		
+		function tokenize_cjk(s) {
+			// Tokenizes input string for CJK languages
+			if (!s)
+				return;
+			var freq = {};
+			var tokens = tokenizer.segment(s);
+			for (var i=0; i < tokens.length; i++) {
+				var t = tokens[i].trim().toLocaleLowerCase();
+				if (stop_words.indexOf(t) != -1 || !t || t.length == 1)
+					continue;
+				if (freq[t] == null)
+					freq[t] = 1;
+				else
+					freq[t]++;
+			}
+			var results = [];
+			for (var key in freq) {
+				results.push([key, freq[key]]);
+			}
+			return results.sort(function(a, b) { 
+				return a[1] < b[1] ? 1 : a[1] > b[1] ? -1 : 0 
+			}).reverse();
+		}
+		
+		function tokenize(s) {
+			if (!s)
+				return;
+			var freq = {};
+			var tokens = s.split(" ");
+			for (var i=0; i < tokens.length; i++) {
+				var t = tokens[i].trim().toLocaleLowerCase();
+				if (stop_words.indexOf(t) != -1 || !t || t.length == 1)
+					continue;
+				if (freq[t] == null)
+					freq[t] = 1;
+				else
+					freq[t]++;
+			}
+			var results = [];
+			for (var key in freq) {
+				results.push([key, freq[key]]);
+			}
+			return results.sort(function(a, b) { 
+				return a[1] < b[1] ? 1 : a[1] > b[1] ? -1 : 0 
+			}).reverse();
+		}
+		
+		function extract_keywords(s, langs) {
+			if (!s)
+				return;
+			var cjk_lang = false;
+			var threshold = 0.95;
+			var keywords = new Array();
+			var double_byte_langs = new Array("ZN", "JA");
+			
+			// Check the first language if it's a CJK language
+			if (double_byte_langs.indexOf(langs[0]) > -1)
+				cjk_lang = true;
+			
+			if (cjk_lang)
+				var tokens = tokenize_cjk(s);
+			else
+				var tokens = tokenize(s);
+
+			for (var i in tokens) {
+				var weight = toFixed((tokens[i][1] / tokens.length) * 100, 2);
+				if (weight > threshold && tokens[i][1] > 1)
+					keywords.push([tokens[i][0], tokens[i][1], weight]);
+			}
+			return keywords; 
+		}
+		
+		function render_results(data) { 
+			var html = new Array();
+			var results = data.results;
+			var numberOfResults = data.resultCount;
+			var template = tmpl("results_tmpl");
+			
+			//console.info(data);
+			
+			for (var i = 0; i < results.length; i++) {
+				if (!results[i].averageUserRating)
+					results[i]["averageUserRating"] = 0;
+				if (!results[i].sellerUrl)
+					results[i]["sellerUrl"] = "#";
+				html.push(template(results[i]));
+			}
+			if (!cache[query+country])
+				cache[query+country] = data;
+			
+			$("#results").html(html.join("\n"));
+			$("#status").css("display", "none");
+			$("#results").fadeIn();
+			$("#btt").show();
+			$('span.stars').stars();
+			
+			$(".details_toggle").click(function(e) {
+				var id = $(this).attr("pid");
+				var status = $(this).attr("status");
+				var langs = $(this).attr("langs");
+				
+				if (langs)
+					langs = langs.split(",");
+				
+				if (status == "0") {
+					$("#short_desc_" + id).hide();
+					
+					/* Calculate keywords */
+					var keywords = extract_keywords($("#long_desc_" + id).html(), langs);
+					$("#kw_" + id).html(tmpl("keywords_tmpl", keywords)).show();
+					
+					$("#long_desc_" + id).fadeIn();
+					$("#ss_" + id).show();
+					$(this).text("Hide Details").css("margin-left", "0");
+					$(this).attr("status", "1");
+					$("html,body").animate({
+						scrollTop: $("#media_" + id).offset().top - 5
+					}, 'slow');	
+					last_toggle_id = id;
+					$(".share_button[rid=" + id + "]").show();
+				} else {
+					$("#kw_" + id).hide();
+					$("#long_desc_" + id).hide();
+					$("#ss_" + id).hide();
+					$("#short_desc_" + id).fadeIn();
+					$(this).text("Show Details").css("margin-left", "5.5em");
+					$(this).attr("status", "0");			
+					$("html,body").animate({
+						scrollTop: $("#media_" + id).offset().top - 5
+					}, 'slow');	
+					last_toggle_id = null;
+					$(".share_button[rid=" + id + "]").hide();
+				}
+			});
+			
+			$("#share_query").fadeIn();
+			if (last_toggle_id) {
+				$(".details_toggle[pid=" + last_toggle_id + "]").click();
+				last_toggle_id = null;
+			}
+		}
+	
+		function search() {
+			var c = $("#countries option:selected").val();
+			var q = $("#query").val();
+			query = q;
+			country = c;
+			if (!q)
+				return;
+			
+			$("#results").hide();
+			$("#btt").hide();
+			$("#status").css("display", "inline");
+			$("#search_btn").focus();
+			
+			$("#share_query").hide();
+			
+			if (cache[q+c]) {
+				render_results(cache[q+c]);
+				return;
+			}
+			
+			var api_url = "https://itunes.apple.com/search?entity=software&term=";
+			api_url += encodeURIComponent(q);
+			api_url += "&limit=" + limit;
+			api_url += "&country=" + c;
+
+			$.ajax({
+				url: api_url,
+				type: 'GET',
+				dataType: 'jsonp',
+				contentType: 'text/html',
+				success: function (data) { 
+					render_results(data); 
+				}
+			});
+		}
+
+		function format(state) {
+			if (!state.id) return state.text; // optgroup
+			return "<img class='flag' src='/flags/" + state.id.toUpperCase() + ".png'/>" + "&nbsp" + state.text;
+		}
+		
+		function generate_share_url() {
+			var q = encodeURIComponent($("#query").val());
+			var s = encodeURIComponent($("#countries").select2("val"));
+			var url = window.location.origin + "/?q=" + q + "&s=" + s;
+			if (last_toggle_id)
+				url += "&t=" + last_toggle_id;
+			prompt("Copy & share the following URL for this search:", url);
+		}
+		
+		$(document).ready(function() {
+		
+			$("#countries").select2({
+				formatResult: format,
+				formatSelection: format,
+				escapeMarkup: function(m) { return m; }
+			});
+		
+			$("#query").focus();
+			$("#search_btn").click(function() {
+				search();
+				ga('send', 'event', 'button', 'click', 'search_by_click');
+			});
+			$("#query").keypress(function(e) {
+				if (e.which == 13) {
+					search();
+					ga('send', 'event', 'button', 'click', 'search_by_enter_key');
+				}
+			});
+			
+			var params = $.url(window.location).param();
+			var q = params["q"];
+			var s = params["s"];
+			last_toggle_id = params["t"];
+			if (s!=null) {
+				//$("#countries option[value='" + s.toUpperCase() + "']").attr("selected", "selected");
+				$("#countries").select2("val", s.toUpperCase());
+			}
+			if (q!=null) {
+				$("#query").val(q);
+				$("#search_btn").click();
+			}
+		});
+	</script>
+</head>
+<body>
+	<a name="top"></a>
+	<div class="container">
+		<h3>Cross Country App Store Search Engine</h3>
+		<b>App Store</b>
+		<select id="countries" style="width: 100%; display:block;">
+			<optgroup label="Favorites">
+				<option value="JP">Japan</option>
+				<option value="TR">Turkey</option>
+				<option value="US">USA</option>
+				<option value="GB">United Kingdom</option>
+			</optgroup>
+			<optgroup label="Supported Countries">
+				<option value="AL">Albania</option>
+				<option value="DZ">Algeria</option>
+				<option value="AO">Angola</option>
+				<option value="AI">Anguilla</option>
+				<option value="AG">Antigua & Barbuda</option>
+				<option value="AR">Argentina</option>
+				<option value="AM">Armenia</option>
+				<option value="AU">Australia</option>
+				<option value="AT">Austria</option>
+				<option value="AZ">Azerbaijan</option>
+				<option value="BS">Bahamas</option>
+				<option value="BH">Bahrain</option>
+				<option value="BB">Barbados</option>
+				<option value="BY">Belarus</option>
+				<option value="BE">Belgium</option>
+				<option value="BZ">Belize</option>
+				<option value="BM">Bermuda</option>
+				<option value="BO">Bolivia</option>
+				<option value="BW">Botswana</option>
+				<option value="BR">Brazil</option>
+				<option value="VG">British Virgin Islands</option>
+				<option value="BN">Brunei</option>
+				<option value="BG">Bulgaria</option>
+				<option value="CA">Canada</option>
+				<option value="KY">Cayman Islands</option>
+				<option value="CL">Chile</option>
+				<option value="CN">China</option>
+				<option value="CO">Colombia</option>
+				<option value="CR">Costa Rica</option>
+				<option value="HR">Croatia</option>
+				<option value="CY">Cyprus</option>
+				<option value="CZ">Czech Republic</option>
+				<option value="DK">Denmark</option>
+				<option value="DM">Dominica</option>
+				<option value="DO">Dominican Republic</option>
+				<option value="EC">Ecuador</option>
+				<option value="EG">Egypt</option>
+				<option value="SV">El Salvador</option>
+				<option value="EE">Estonia</option>
+				<option value="FI">Finland</option>
+				<option value="FR">France</option>
+				<option value="DE">Germany</option>
+				<option value="GH">Ghana</option>
+				<option value="GR">Greece</option>
+				<option value="GD">Grenada</option>
+				<option value="GT">Guatemala</option>
+				<option value="GY">Guyana</option>
+				<option value="HN">Honduras</option>
+				<option value="HK">Hong Kong</option>
+				<option value="HU">Hungary</option>
+				<option value="IS">Iceland</option>
+				<option value="IN">India</option>
+				<option value="ID">Indonesia</option>
+				<option value="IE">Ireland</option>
+				<option value="IL">Israel</option>
+				<option value="IT">Italy</option>
+				<option value="JM">Jamaica</option>
+				<option value="JO">Jordan</option>
+				<option value="KZ">Kazakhstan</option>
+				<option value="KE">Kenya</option>
+				<option value="KW">Kuwait</option>
+				<option value="LV">Latvia</option>
+				<option value="LB">Lebanon</option>
+				<option value="LT">Lithuania</option>
+				<option value="LU">Luxembourg</option>
+				<option value="MO">Macau</option>
+				<option value="MK">Macedonia</option>
+				<option value="MG">Madagascar</option>
+				<option value="MY">Malaysia</option>
+				<option value="ML">Mali</option>
+				<option value="MT">Republic of Malta</option>
+				<option value="MU">Mauritius</option>
+				<option value="MX">Mexico</option>
+				<option value="MS">Montserrat</option>
+				<option value="MD">Moldova</option>
+				<option value="NL">Netherlands</option>
+				<option value="NZ">New Zealand</option>
+				<option value="NI">Nicaragua</option>
+				<option value="NE">Niger</option>
+				<option value="NG">Nigeria</option>
+				<option value="NO">Norway</option>
+				<option value="OM">Oman</option>
+				<option value="PK">Pakistan</option>
+				<option value="PA">Panama</option>
+				<option value="PY">Paraguay</option>
+				<option value="PE">Peru</option>
+				<option value="PH">Philippines</option>
+				<option value="PL">Poland</option>
+				<option value="PT">Portugal</option>
+				<option value="QA">Qatar</option>
+				<option value="RO">Romania</option>
+				<option value="RU">Russia</option>
+				<option value="KN">St. Kitts & Nevis</option>
+				<option value="LC">St. Lucia</option>
+				<option value="VC">St. Vincent & The Grenadines</option>
+				<option value="SA">Saudi Arabia</option>
+				<option value="SN">Senegal</option>
+				<option value="SG">Singapore</option>
+				<option value="SK">Slovakia</option>
+				<option value="SI">Slovenia</option>
+				<option value="ZA">South Africa</option>
+				<option value="KR">South Korea</option>
+				<option value="ES">Spain</option>
+				<option value="LK">Sri Lanka</option>
+				<option value="SR">Suriname</option>
+				<option value="SE">Sweden</option>
+				<option value="CH">Switzerland</option>
+				<option value="TW">Taiwan</option>
+				<option value="TZ">Tanzania</option>
+				<option value="TH">Thailand</option>
+				<option value="TT">Trinidad & Tobago</option>
+				<option value="TN">Tunisia</option>
+				<option value="TC">Turks & Caicos</option>
+				<option value="UG">Uganda</option>
+				<option value="AE">United Arab Emirates</option>
+				<option value="UY">Uruguay</option>
+				<option value="UZ">Uzbekistan</option>
+				<option value="VE">Venezuela</option>
+				<option value="VN">Vietnam</option>
+				<option value="YE">Yemen</option>
+			</optgroup>
+		</select><br/>
+		
+		<b>Query</b>
+		<div class="input-group">
+			<input type="text" name="query" value="" id="query" class="form-control" placeholder="App Name / Keyword(s)" />
+			<span class="input-group-btn">
+				<button type="button" id="search_btn" class="btn btn-default">
+					<span class="glyphicon glyphicon-search"></span> Search
+				</button>
+				<img src="data:image/gif;base64,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" id="status" style="display:none"/>	
+				<a href="javascript:generate_share_url();" id="share_query" style="display:none; padding:5px; font-weight:bold">Share this search</a>
+			</span>
+		</div>
+		<br clear="both"/>
+		<div id="results">
+			<!-- Results template -->
+			<script type="text/html" id="results_tmpl">
+				<div class="media" id="media_<%=trackId%>">
+					<a class="pull-left" href="<%=trackViewUrl%>" target="_blank" alt="Open in iTunes">
+						<img class="media-object" src="<%=artworkUrl60%>" alt="<%=artistName%>" height="57" width="57" style="z-index:1">
+					</a>
+					<div class="media-body">
+						<h4 class="media-heading">
+							<a href="<%=trackViewUrl%>" target="_blank" alt="Open in iTunes"><%=trackName%></a>
+						</h4>
+						<span class="label label-primary"><%=genres[0]%></span>&nbsp;
+						<span class="label label-primary"><%=genres[1]%></span>
+						<span class="stars"><%=averageUserRating%></span>
+						<span style="display:block;">by <a href="<%=sellerUrl%>" target="_blank"><%=artistName%></a> in <%=releaseDate.substring(0, 10)%>&nbsp;(<%=formattedPrice%>)</span>
+						<span style="display:block;">Languages: <%=languageCodesISO2A%></span>
+						<div id="short_desc_<%=trackId%>"><%=description.substring(0, 100)%>...</div>
+					</div>
+				</div>
+				<div class="long_desc" id="long_desc_<%=trackId%>" style="display:none;">
+					<%=description%>
+					<br clear="both"/>
+				</div>
+				<div class="keywords" id="kw_<%=trackId%>"></div>
+				<div class="screenshots" id="ss_<%=trackId%>" style="display:none;">
+					<div metrics-loc="iPhone" num-items="5" class="content iphone-screen-shots items5">
+						<div class="image-wrapper" style="width: 1725px;">
+						<% for (i=0; i < screenshotUrls.length; i++) { %>
+							<div class="lockup">
+								<img alt="iPhone Screenshot 1" class="portrait" src="<%=screenshotUrls[i]%>">
+							</div>
+						<% } %>
+						</div>
+					</div>
+				</div>
+				<button type="button" status="0" pid="<%=trackId%>" langs="<%=languageCodesISO2A%>" class="btn btn-primary btn-xs details_toggle" style="margin:10px 0 0 5.5em;">Show Details</button>
+				<button type="button" status="0" rid="<%=trackId%>" class="btn btn-success btn-xs share_button" style="margin:10px 0 0 0.5em;" onClick="javascript:generate_share_url();">Share This Search Result</button>
+			</script>			
+		</div>
+		<br clear="both"/>
+		
+		<!-- Keywords template -->
+		<script type="text/html" id="keywords_tmpl">
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th>Keyword</th>
+						<th>Freq.</th>
+						<th>Relevance</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for ( var i = 0; i < length; i++ ) { %>
+					<% var item = pop(); %>
+					<tr>
+						<td><%=item[0]%></td>
+						<td><%=item[1]%></td>
+						<td><%=item[2]%></td>
+					</tr>
+					<% } %>  
+				</tbody>
+			</table>
+		</script>
+		
+
+	</div>
+	
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45780360-1', 'knowman.jp');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
